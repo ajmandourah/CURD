@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Note app</title>
+</head>
+<body>
+
+<h1>Note app </h1>
+<p> Here you can leave a note and view older notes</p>
+<p>older notes:</p>
+
+{% for title in results %}
+
+    <div class="NoteList">
+        <a href="/{{ title.id }}"> {{ title.title }}</a>
+    </div>
+
+{% endfor %}
+
+</body>
+</html>

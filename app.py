@@ -33,11 +33,15 @@ def viewall():
     for note in notes:
         print(note.title)
 
-
-
 @app.route('/')
 def view():
     return render_template("new.html", results = Note.query.all())
+
+# view every note asid based on the note's id on the db.
+@app.route('/<int:userid>')
+def viewnote(userid):
+    getnote = Note.query.get(userid)
+    return render_template("note.html", getnote=getnote)
 
 if __name__ == '__main__':
    db.create_all()
