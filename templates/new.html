@@ -2,21 +2,63 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link href="//fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='skeleton.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='normalize.css') }}">
     <title>Note app</title>
 </head>
+<style>
+    body {background-color: #FAFAFA;}
+    h6, h2, h4 {text-align: center;}
+    .border {background-color: #F2F2F2; border-radius: 10px;}
+    .margin {
+        margin-left: 10px;
+        margin-bottom: 10px;
+        margin-top: 10px;
+        margin-right: 10px;
+        }
+</style>
 <body>
 
-<h1>Note app </h1>
-<p> Here you can leave a note and view older notes</p>
-<p>older notes:</p>
-
-{% for title in results %}
-
-    <div class="NoteList">
-        <a href="/{{ title.id }}"> {{ title.title }}</a>
+<div class="container">
+    <br>
+    <div class="row">
+        <div class="four columns offset-by-four">
+            <h2>Note app</h2>
+            <h6>Here you can leave a note and view older notes.</h6><br>
+        </div>
     </div>
+</div>
+<div class="container">
+    <div class="row">
+         <div class="six columns border">
+                 <div class="margin">
+                <h4>Older notes:</h4>
+                {% for title in results %}
 
-{% endfor %}
+                <div class="NoteList">
+                    <a href="/{{ title.id }}"> {{ title.title }}</a>
+                </div>
+                {% endfor %}
+             </div>
+        </div>
 
+         <div class="six columns border">
+             <div class="margin">
+             <h4>Add a new note:</h4>
+                 <form action="/create" method="post">
+                     Title:
+                     <br>
+                     <input type="text"name="title"placeholder="Note title.">
+                     <br><br>
+                     Body:
+                     <textarea class="u-full-width"name="body"placeholder="Write your note here."></textarea>
+                     <br><br>
+                     <input type="submit">
+                  </form>
+             </div>
+        </div>
+    </div>
+</div>
 </body>
 </html>

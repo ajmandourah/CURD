@@ -1,6 +1,6 @@
 #!env/bin/ python
 
-from flask import Flask, render_template
+from flask import Flask, render_template, request, redirect
 from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
@@ -21,7 +21,7 @@ class Note(db.Model):
     def __repr__(self):
         return '<Note u %r>' % (self.title)
 
-# The addnote function which adds the notes to the database.
+# The addnote function which a dds the notes to the database.
 def addnote(title='', body=''):
     newnote = Note(title, body)
     db.session.add(newnote)
@@ -40,8 +40,20 @@ def view():
 # view every note asid based on the note's id on the db.
 @app.route('/<int:userid>')
 def viewnote(userid):
-    getnote = Note.query.get(userid)
+    getnote = Note.query.get_or_404(userid)
     return render_template("note.html", getnote=getnote)
+
+@app.route('/create', methods=["GET", "POST"])
+def create():
+    if request.method == "GET":
+        return redirect("/")
+    else:
+        title = request.form["title"]
+        body = request.form["body"]
+        note = Note(title, body)
+        db.session.add(note)
+        db.session.commit()
+        return redirect("/")
 
 if __name__ == '__main__':
    db.create_all()
