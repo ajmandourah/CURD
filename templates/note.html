@@ -12,6 +12,8 @@
 
 <p> {{ getnote.title }}</p>
 <p> {{ getnote.body }}</p>
-
+<form action="/del" method="post">
+    <button type="submit" value="{{ getnote.id }}" name="delbuttn">Delete note</button>
+</form>
 </body>
 </html>

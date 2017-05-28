@@ -1,4 +1,4 @@
-#!/home/ladis/projects/blog/env/bin/python
+#!/home/chrx/projects/note/env/bin/python
 
 import sys
 import getopt

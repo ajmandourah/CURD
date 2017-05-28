@@ -33,12 +33,18 @@ def viewall():
     for note in notes:
         print(note.title)
 
+# delete the note
+def delnote(noteid):
+    Note.query.filter(Note.id == noteid).delete()
+    db.session.commit()
+
+
 @app.route('/')
 def view():
     return render_template("new.html", results = Note.query.all())
 
 # view every note asid based on the note's id on the db.
-@app.route('/<int:userid>')
+@app.route('/<int:userid>', methods=["GET", "POST"])
 def viewnote(userid):
     getnote = Note.query.get_or_404(userid)
     return render_template("note.html", getnote=getnote)
@@ -54,6 +60,12 @@ def create():
         db.session.add(note)
         db.session.commit()
         return redirect("/")
+
+@app.route("/del", methods=["POST"])
+def delete():
+    note = request.form["delbuttn"]
+    delnote(note)
+    return redirect("/")
 
 if __name__ == '__main__':
    db.create_all()
